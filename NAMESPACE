@@ -1,0 +1,47 @@
+ useDynLib(BayHap)
+
+  export(
+   autocorr,  
+   bayhapFreq,    
+   bayhapReg,
+   BIC,  
+   conv.test,        
+   correl,
+   haplo.prior,
+   plotReg,
+   plotFreq,  
+   plotACF,
+   plotDensity,   
+   plotRmean,       
+   plotTrace,
+   setupData  
+ )
+
+
+S3method(print,reg) 
+S3method(print,freq) 
+
+import("boa")
+
+#hidden functions
+
+#  allele 
+#  allele.names 
+#  chain.import 
+#  boa.plot.acf.ad 
+#  genotype 
+#  genotypeOrder 
+#  expectedGenotypes 
+#  haplo.list       
+#  haplo.list.all 
+#  haplo.pairs      
+#  import 
+#  is.genotype
+#  is.locus
+#  is.snp
+#  make.dummies 
+#  survival
+#  combinations 
+#  permutations 
+
+
