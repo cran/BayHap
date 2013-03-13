@@ -283,34 +283,34 @@ static int CheckSeedmcmc (unsigned long seed[6])
      -1 otherwise */
    int i;
 
-   for (i = 0; i < 3; ++i) {
+  /* for (i = 0; i < 3; ++i) {
       if (seed[i] >= m1) {
 	 fprintf (stderr, "****************************************\n"
 		 "ERROR: Seed[%1d] >= m1, Seed is not set.\n"
 		 "****************************************\n\n", i);
 	 return (-1);
        }
-   }
-   for (i = 3; i < 6; ++i) {
+   }*/
+   /*for (i = 3; i < 6; ++i) {
       if (seed[i] >= m2) {
 	 fprintf (stderr, "****************************************\n"
 		 "ERROR: Seed[%1d] >= m1, Seed is not set.\n"
 		 "****************************************\n\n", i);
 	 return (-1);
        }
-   }
-   if (seed[0] == 0 && seed[1] == 0 && seed[2] == 0) {
+   }*/
+   /*if (seed[0] == 0 && seed[1] == 0 && seed[2] == 0) {
       fprintf (stderr, "****************************\n"
 	      "ERROR: First 3 seeds = 0.\n"
 	      "****************************\n\n");
       return (-1);
-   }
-   if (seed[3] == 0 && seed[4] == 0 && seed[5] == 0) {
+   }*/
+   /*if (seed[3] == 0 && seed[4] == 0 && seed[5] == 0) {
       fprintf (stderr, "****************************\n"
 	      "ERROR: Last 3 seeds = 0.\n"
 	      "****************************\n\n");
       return (-1);
-   }
+   }*/
 
    return 0;
 }
@@ -329,10 +329,10 @@ RngStream RngStream_CreateStreammcmc (const char name[])
    size_t len = strlen (name);
 
    g = (RngStream) malloc (sizeof (struct RngStream_InfoState));
-   if (g == NULL) {
+   /*if (g == NULL) {
       printf ("RngStream_CreateStreammcmc: No more memory\n\n");
       exit (EXIT_FAILURE);
-   }
+   }*/
    g->name = (char *) malloc ((len + 1) * sizeof (char));
    strncpy (g->name, name, len + 1); 
    g->Anti = 0;
@@ -393,7 +393,7 @@ void RngStream_SetPackageSeedmcmc (unsigned long seed[6])
 {
    int i;
    if (CheckSeedmcmc (seed))
-      exit (EXIT_FAILURE);
+     /* exit (EXIT_FAILURE);*/
    for (i = 0; i < 6; ++i)
       nextSeed[i] = seed[i];
 }
@@ -404,7 +404,7 @@ void RngStream_SetSeedmcmc (RngStream g, unsigned long seed[6])
 {
    int i;
    if (CheckSeedmcmc (seed))
-      exit (EXIT_FAILURE);
+     /* exit (EXIT_FAILURE);*/
    for (i = 0; i < 6; ++i)
       g->Cg[i] = g->Bg[i] = g->Ig[i] = seed[i];
 }
@@ -456,15 +456,15 @@ void RngStream_WriteStatemcmc (RngStream g)
    int i;
    if (g == NULL)
       return;
-   printf ("The current state of the Rngstream");
-   if (strlen (g->name) > 0)
-      printf (" %s", g->name);
-   printf (":\n   Cg = { ");
+  /* printf ("The current state of the Rngstream");*/
+  /* if (strlen (g->name) > 0)
+     printf (" %s", g->name);
+   printf (":\n   Cg = { ");*/
 
-   for (i = 0; i < 5; i++) {
+/*   for (i = 0; i < 5; i++) {
       printf ("%lu, ", (unsigned long) g->Cg[i]);
    }
-   printf ("%lu }\n\n", (unsigned long) g->Cg[5]);
+   printf ("%lu }\n\n", (unsigned long) g->Cg[5]);*/
 }
 
 /*-------------------------------------------------------------------------*/
@@ -474,8 +474,8 @@ void RngStream_WriteStateFullmcmc (RngStream g)
    int i;
    if (g == NULL)
       return;
-   printf ("The RngStream");
-   if (strlen (g->name) > 0)
+  /* printf ("The RngStream");*/
+  /* if (strlen (g->name) > 0)
       printf (" %s", g->name);
    printf (":\n   Anti = %s\n", (g->Anti ? "true" : "false"));
    printf ("   IncPrec = %s\n", (g->IncPrec ? "true" : "false"));
@@ -496,7 +496,7 @@ void RngStream_WriteStateFullmcmc (RngStream g)
    for (i = 0; i < 5; i++) {
       printf ("%lu, ", (unsigned long) (g->Cg[i]));
    }
-   printf ("%lu }\n\n", (unsigned long) g->Cg[5]);
+   printf ("%lu }\n\n", (unsigned long) g->Cg[5]);*/
 }
 
 /*-------------------------------------------------------------------------*/
@@ -1135,7 +1135,7 @@ double slice_pheno(int *pheno_double,double *beta,matriu_doub *dummy,int tamany,
 double *extrems;
 vec_doub r_aleat;
 double fxcan,u,v,r,xcan,xact,y,z,L,R;
-int exit_ok,exit_error,compt,iter;
+int ex_ok,ex_error,compt,iter;
 
 
 iter=0;
@@ -1163,8 +1163,8 @@ if (type_pheno==0){
         }                       
     }    
 }
-exit_ok=0;
-exit_error=0;
+ex_ok=0;
+ex_error=0;
 compt=0;
 
 L=extrems[0];
@@ -1176,9 +1176,9 @@ do{
  beta[i]=xcan;
  fxcan=versemblanca(pheno_double,beta,dummy,tamany,nindiv,cont,type_pheno,i,var,varc,ncoeff,mu,prior);
  if (z<fxcan){
-     exit_ok=1;
+     ex_ok=1;
  }else{
-     exit_ok=0;
+     ex_ok=0;
      if(xcan<xact){
         L=xcan;
      }else{   
@@ -1190,16 +1190,16 @@ do{
  compt=compt+1;
  
   if (compt==1000){
-      exit_error=1;
-      exit_ok=1;
+      ex_error=1;
+      ex_ok=1;
 
   } 
-}while(exit_ok==0);
+}while(ex_ok==0);
 
-  if ((exit_error==1)&&(only_freq==0)) {
+ /* if ((ex_error==1)&&(only_freq==0)) {
       printf("ERROR: The implemented method is not suitable for these data, the algorithm not converge. \n");
       exit(0);
-  }
+  }*/
       
 
 free(extrems); 
@@ -1370,7 +1370,7 @@ void Gibbs_pheno(int *pheno_double,double *beta,matriu_doub *dummy,int tamany,Rn
          
          
                
-	 if (verb==2){        
+	/* if (verb==2){        
 		printf("number of indiv = %i \n",nindiv);
                 printf("number of locus = %i \n",nlocus);
                 printf("burnin = %i \n",burnin);
@@ -1384,7 +1384,7 @@ void Gibbs_pheno(int *pheno_double,double *beta,matriu_doub *dummy,int tamany,Rn
                 printf("lag = %i \n",lag);
                 printf("number of covars =%i \n",ncovars);
              
-	 }
+	 }*/
 
          /****************memory alloc*****************************************/
    
@@ -1442,7 +1442,7 @@ void Gibbs_pheno(int *pheno_double,double *beta,matriu_doub *dummy,int tamany,Rn
               id[0][i]=id_outhaplo[0][i];                         
               
          }
-         printf("id=%s \n",id[0]);
+       /*  printf("id=%s \n",id[0]);*/
           id[0][25]='\0';
          
                    
@@ -1450,7 +1450,7 @@ void Gibbs_pheno(int *pheno_double,double *beta,matriu_doub *dummy,int tamany,Rn
          strcat (outhaplo,ext);
          strcat (outhaplo2,id[0]); 
          strcat (outhaplo2,ext);
-         printf("nom outhaplo=%s \n",outhaplo);
+        /* printf("nom outhaplo=%s \n",outhaplo);*/
 
 
          for(i=0;i<nindivexp;i++){
@@ -1614,22 +1614,22 @@ void Gibbs_pheno(int *pheno_double,double *beta,matriu_doub *dummy,int tamany,Rn
                         fprintf(sortida2," \n"); 	
                     }              
                     
-                    if (((verb==1)||(verb==2))&&(only_freq==0)){
+                    /*if (((verb==1)||(verb==2))&&(only_freq==0)){
                          printf("Processing burn in period...\n");
-                    }
+                    }*/
                     
                 }
                 
                 if ((iter==burnin+burnin_haplo+burnin_logit)&&(only_freq==0)){
-                   if ((verb==1)||(verb==2)){ 
+                  /* if ((verb==1)||(verb==2)){ 
                    printf("End of burn in period. Processing iterations...\n");
-                   }
+                   }*/
                 }
                 if (iter%1000==0) {
                   iterd=iter/lag;
-                    if (verb==2){
+                  /*  if (verb==2){
                     printf("iter=%i \n",iterd);
-                    }
+                    }*/
                 }
                 sum=0;
                 for(i=0;i<dosexpnl;i++){
@@ -1719,15 +1719,15 @@ void Gibbs_pheno(int *pheno_double,double *beta,matriu_doub *dummy,int tamany,Rn
  		   if (inters!=0){
 		   ncoeff=ncoeff+tamany*inters;
                    }
-                   if ((verb==2)&&(only_freq==0)){
+                  /* if ((verb==2)&&(only_freq==0)){
                    printf("Number of haplotypes with frequency higher than freqmin = %i \n",tamany);
-                   }
-                   if ((tamany==1)&&(only_freq==0)){
+                   }*/
+                  /* if ((tamany==1)&&(only_freq==0)){
                    printf("Only one haplotype over rare treshold. Model coefficients could not be interpretable. \n"); 
-		   }
-                   if ((verb==2)&&(only_freq==0)){
+		   }*/
+                  /* if ((verb==2)&&(only_freq==0)){
                    printf("Number of parameters for the markov chain = %i \n",ncoeff);
-                   }
+                   }*/
                
                    
                    guarda=0.;
